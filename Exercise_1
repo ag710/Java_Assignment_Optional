@@ -1,0 +1,91 @@
+/*Exercise 1*/
+package optionals;
+
+import java.util.*;
+
+public class PhoneBook {
+
+    private static final HashMap<String, String> Phonenum =new HashMap<String, String>() {
+        {
+            put("Ramesh", "9087876887");
+            put("Singh", "9087876997");
+            put("Raghav", "9087876998");
+        }
+    };
+
+    private HashMap<String, String> pBookEntries = Phonenum;
+
+    PhoneBook() { }
+
+    public HashMap<String, String> getPhoneBookEntries() {
+        return pBookEntries;
+    }
+
+    public Optional<String> findPhoneNumberByName(String name){
+        return null;
+    }
+
+    public Optional<String> findNameByPhoneNumber(String phoneNumber){
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        System.out.println("Hello from PhoneBook's toString method");
+        return "PhoneBook{" +
+                "phoneBookEntries=" + pBookEntries +
+                '}';
+    }
+}
+
+
+/*Test Case for PhoneBook*/
+package optionals;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class PhoneBookTest {
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
+
+    private PhoneBook pBook = new PhoneBook();
+
+    @Test
+    public void findPhoneNumberByName() {
+        Optional<String> pNum = pBook.findPhoneNumberByName("Ramesh");
+
+        assertThat(pNum.get()).isEqualTo("9087876887");
+    }
+
+    @Test
+    public void findPhoneNumberByName_NotFound() {
+        expectedException.expect(NoSuchElementException.class);
+
+        Optional<String> pNum = pBook.findPhoneNumberByName("Ramesh");
+        pNum.get();
+    }
+
+    @Test
+    public void findNameByPhoneNumber() {
+        Optional<String> name = pBook.findNameByPhoneNumber("9087876887");
+        assertThat(name.get()).isEqualTo("Ramesh");
+    }
+
+    @Test
+    public void findNameByPhoneNumber_NotFound() {
+        expectedException.expect(NoSuchElementException.class);
+
+        Optional<String> phoneNumber = phoneBook.findPhoneNumberByName("123");
+
+        phoneNumber.get();
+    }
+
+}
